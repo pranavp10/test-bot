@@ -1,9 +1,7 @@
 function App() {
   return (
     <>
-      <div style={{ width: "200px", height: "400px" }} className="hello">
-        dfg
-      </div>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
     </>
   );
 }

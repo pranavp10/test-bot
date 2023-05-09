@@ -1,10 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+const chatDiv = document.createElement("div");
+chatDiv.setAttribute("id", "chat-id");
+document.body.appendChild(chatDiv);
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
+
+ReactDOM.createRoot(document.getElementById("chat-id") as HTMLElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

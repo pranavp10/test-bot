@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       {isOpen && (
-        <div className="h-[500px] w-96 shadow-lg rounded-md absolute bottom-24 right-5 p-4">
+        <div className="h-[500px] w-96 shadow-lg rounded-md absolute bottom-24 right-5 p-4 bg-yellow-200">
           <div className="relative h-full">
             <div className="flex justify-start gap-2 items-center border-b-2 pb-2 mb-2">
               <svg
@@ -46,7 +46,7 @@ function App() {
           </div>
         </div>
       )}
-      <div className="absolute bottom-4 right-4 bg-slate-950 rounded-full">
+      <div className="absolute bottom-4 right-4 bg-yellow-300 rounded-full">
         <button
           onClick={() => {
             setIsOpen(!isOpen);

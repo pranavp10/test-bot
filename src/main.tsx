@@ -1,6 +1,6 @@
-const chatDiv = document.createElement("div");
-chatDiv.setAttribute("id", "chat-id");
-document.body.appendChild(chatDiv);
+// const chatDiv = document.createElement("div");
+// chatDiv.setAttribute("id", "chat-id");
+// document.body.appendChild(chatDiv);
 
 import React from "react";
 import ReactDOM from "react-dom/client";

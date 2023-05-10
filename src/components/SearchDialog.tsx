@@ -52,8 +52,8 @@ function promptDataReducer(
 }
 
 export function SearchDialog() {
+  const bottomRef = React.useRef<HTMLDivElement>(null);
   const [search, setSearch] = React.useState<string>("");
-  const [question, setQuestion] = React.useState<string>("");
   const [answer, setAnswer] = React.useState<string | undefined>("");
   const eventSourceRef = React.useRef<SSE>();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -63,13 +63,18 @@ export function SearchDialog() {
     promptDataReducer,
     []
   );
+  const [message, setMessage] = React.useState<
+    { message: string; bot: boolean; user: boolean }[]
+  >([]);
   const currentAnswerRef = React.useRef<string>("");
   const currentQuestionRef = React.useRef<string>("");
 
   const handleConfirm = React.useCallback(
     async (query: string) => {
+      if (bottomRef.current) {
+        bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
+      }
       setAnswer(undefined);
-      setQuestion(query);
       setSearch("");
       dispatchPromptData({ index: promptIndex, answer: undefined, query });
       setHasError(false);
@@ -98,19 +103,16 @@ export function SearchDialog() {
       eventSource.addEventListener("message", (e: any) => {
         try {
           setIsLoading(false);
-
-          console.log("I am here");
           if (e.data === "[DONE]") {
             setPromptIndex((x) => {
               return x + 1;
             });
-            console.log("I am now here");
-            console.log(currentAnswerRef.current);
-            console.log("this is the question");
-            console.log(currentQuestionRef.current);
-            // Call insertUserResponse after the entire response has been received
             if (currentAnswerRef.current) {
-              console.log("Inserting question from user and response...");
+              setMessage([
+                ...message,
+                { message: currentQuestionRef.current, bot: false, user: true },
+                { message: currentAnswerRef.current, bot: true, user: false },
+              ]);
               insertUserResponse(
                 currentQuestionRef.current,
                 currentAnswerRef.current
@@ -133,6 +135,9 @@ export function SearchDialog() {
             });
             return updatedAnswer;
           });
+          if (bottomRef.current) {
+            bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
+          }
         } catch (err) {
           handleError(err);
         }
@@ -149,8 +154,11 @@ export function SearchDialog() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    setQuestion(search);
+    setMessage([...message, { message: search, bot: false, user: true }]);
     currentQuestionRef.current = search;
+    if (bottomRef.current) {
+      bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
+    }
     handleConfirm(search);
   };
 
@@ -158,6 +166,7 @@ export function SearchDialog() {
     console.log("I am in the insert user function");
     console.log("Query:", query);
     console.log("Response:", response);
+    setAnswer("");
 
     try {
       const { data, error } = await supabase.from("user_response").insert([
@@ -198,7 +207,10 @@ export function SearchDialog() {
               </svg>
               <p className="font-bold">Chatbot</p>
             </div>
-            <div className="h-96 overflow-y-auto flex flex-col gap-4">
+            <div
+              className="h-96 overflow-y-auto flex flex-col gap-4"
+              ref={bottomRef}
+            >
               <div className="flex gap-2 justify-start items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -213,16 +225,40 @@ export function SearchDialog() {
                   Hi i am AI bot how can i help you
                 </div>
               </div>
-              {question && (
-                <div className="flex gap-2 justify-end items-center">
-                  <div className="bg-gray-200 p-3 rounded-lg ml-16">
-                    {question}
-                  </div>
-                  <span className="bg-slate-100 dark:bg-slate-300 p-2 w-8 h-8 rounded-full text-center flex items-center justify-center">
-                    <User width={18} />
-                  </span>
-                </div>
-              )}
+              {message.map((oldQ, i) => {
+                if (oldQ.user) {
+                  return (
+                    <div
+                      className="flex gap-2 justify-end items-center"
+                      key={i}
+                    >
+                      <div className="bg-gray-200 p-3 rounded-lg ml-16">
+                        {oldQ.message}
+                      </div>
+                      <span className="bg-slate-100 dark:bg-slate-300 p-2 w-8 h-8 rounded-full text-center flex items-center justify-center">
+                        <User width={18} />
+                      </span>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="flex gap-2 justify-start" key={`${i} a`}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-8 h-8 bg-gray-950 rounded-full text-white p-2 flex-shrink-0"
+                      >
+                        <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
+                        <path d="M15.75 7.5c-1.376 0-2.739.057-4.086.169C10.124 7.797 9 9.103 9 10.609v4.285c0 1.507 1.128 2.814 2.67 2.94 1.243.102 2.5.157 3.768.165l2.782 2.781a.75.75 0 001.28-.53v-2.39l.33-.026c1.542-.125 2.67-1.433 2.67-2.94v-4.286c0-1.505-1.125-2.811-2.664-2.94A49.392 49.392 0 0015.75 7.5z" />
+                      </svg>
+                      <div className="bg-gray-200 p-3 rounded-lg mr-16">
+                        {oldQ.message}
+                      </div>
+                    </div>
+                  );
+                }
+              })}
               {(isLoading || answer || hasError) && (
                 <div className="flex gap-2 justify-start">
                   <svg

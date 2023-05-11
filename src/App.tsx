@@ -2,10 +2,11 @@ import { SearchDialog } from "./components/SearchDialog";
 
 function App() {
   return (
-    <div className="!z-[9999999]">
+    <div className="!z-[9999999] bg-gray-100">
       <SearchDialog />
       <div className="!fixed !bottom-4 !right-4 !rounded-full">
         <svg
+          className="rounded-full"
           width="60"
           zoomAndPan="magnify"
           viewBox="0 0 375 374.999991"

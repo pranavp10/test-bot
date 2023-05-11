@@ -4,7 +4,7 @@ function App() {
   return (
     <div>
       <SearchDialog />
-      <div className="absolute bottom-4 right-4 bg-gray-500 rounded-full">
+      <div className="!sticky !bottom-4 !right-4 !rounded-full">
         <svg
           width="60"
           zoomAndPan="magnify"

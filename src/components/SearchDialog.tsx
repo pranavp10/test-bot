@@ -193,9 +193,9 @@ export function SearchDialog() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="h-[500px] w-96 shadow-lg rounded-md absolute bottom-24 right-5 p-4 bg-white">
-          <div className="relative h-full">
-            <div className="flex justify-start gap-2 items-center border-b pb-2 mb-2">
+        <div className="!h-[500px] !w-96 !shadow-lg !rounded-md !absolute !bottom-24 !right-5 !p-4 !bg-white">
+          <div className="!relative !h-full">
+            <div className="!flex !justify-start !gap-2 !items-center !border-b !pb-2 !mb-2">
               <svg
                 width="30"
                 zoomAndPan="magnify"
@@ -1005,19 +1005,19 @@ export function SearchDialog() {
                   fill-rule="nonzero"
                 />
               </svg>
-              <p className="font-bold">Super Human AI</p>
+              <p className="!font-bold">SupaHuman AI</p>
             </div>
             <div
-              className="h-96 overflow-y-auto flex flex-col gap-4 pb-10"
+              className="!h-96 !overflow-y-auto !flex !flex-col !gap-4 !pb-10"
               ref={bottomRef}
             >
-              <div className="bg-gray-100 p-3 rounded-lg mr-16">
+              <div className="!bg-gray-100 !p-3 !rounded-lg !mr-16">
                 Hi! I'm SupaHumanAI, ask me anything about SupaHuman!
               </div>
               {message.map((oldQ, i) => {
                 if (oldQ.user) {
                   return (
-                    <div className="bg-[#78D1CC] p-3 rounded-lg ml-16 text-white">
+                    <div className="!bg-[#78D1CC] !p-3 !rounded-lg !ml-16 !text-white">
                       {oldQ.message}
                     </div>
                   );
@@ -1025,7 +1025,7 @@ export function SearchDialog() {
                   return (
                     <div
                       key={`${i} a`}
-                      className="bg-gray-100 p-3 rounded-lg mr-16"
+                      className="!bg-gray-100 !p-3 !rounded-lg !mr-16"
                     >
                       {oldQ.message}
                     </div>
@@ -1033,9 +1033,9 @@ export function SearchDialog() {
                 }
               })}
               {(isLoading || answer || hasError) && (
-                <div className="bg-gray-100 p-3 rounded-lg mr-16">
+                <div className="!bg-gray-100 !p-3 !rounded-lg !mr-16">
                   {isLoading && (
-                    <div className="animate-spin relative flex w-5 h-5 ml-2">
+                    <div className="!animate-spin !relative !flex !w-5 !h-5 !ml-2">
                       <Loader />
                     </div>
                   )}
@@ -1048,13 +1048,13 @@ export function SearchDialog() {
                 <input
                   placeholder="Ask a question..."
                   name="search"
-                  className="block w-full rounded-md py-1.5 pl-4 pr-10 border border-gray-300 col-span-3 p"
+                  className="!block !w-full !rounded-md !py-1.5 !pl-4 !pr-10 !border !border-gray-300 !col-span-3 !p"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <button
                   type="submit"
-                  className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  className="!absolute !inset-y-0 !right-0 !flex !items-center !pr-3"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

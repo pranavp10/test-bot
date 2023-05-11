@@ -192,8 +192,8 @@ export function SearchDialog() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div className="!h-[500px] !w-96 !shadow-lg !rounded-md !absolute !bottom-24 !right-5 !p-4 !bg-white">
+      <form onSubmit={handleSubmit} className="">
+        <div className="!h-[500px] !w-96   !shadow-lg !rounded-md !fixed !bottom-24 !right-5 !p-4 !bg-white">
           <div className="!relative !h-full">
             <div className="!flex !justify-start !gap-2 !items-center !border-b !pb-2 !mb-2">
               <svg

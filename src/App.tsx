@@ -4,7 +4,7 @@ function App() {
   return (
     <div className="!z-[9999999]">
       <SearchDialog />
-      <div className="!sticky !bottom-4 !right-4 !rounded-full">
+      <div className="!fixed !bottom-4 !right-4 !rounded-full">
         <svg
           width="60"
           zoomAndPan="magnify"

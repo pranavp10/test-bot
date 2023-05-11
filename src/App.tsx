@@ -2,7 +2,7 @@ import { SearchDialog } from "./components/SearchDialog";
 
 function App() {
   return (
-    <div>
+    <div className="!z-[9999999]">
       <SearchDialog />
       <div className="!sticky !bottom-4 !right-4 !rounded-full">
         <svg

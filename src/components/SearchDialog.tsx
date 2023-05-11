@@ -171,8 +171,8 @@ export function SearchDialog() {
     try {
       const { data, error } = await supabase.from("user_response").insert([
         {
-          query: query,
-          response: response,
+          user_question: query,
+          bot_answer: response,
           created_at: new Date(),
         },
       ]);
